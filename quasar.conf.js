@@ -7,7 +7,7 @@
 // https://quasar.dev/quasar-cli/quasar-conf-js
 /* eslint-env node */
 
-module.exports = function(/* ctx */) {
+module.exports = function(ctx) {
   return {
     // https://quasar.dev/quasar-cli/cli-documentation/supporting-ie
     supportIE: true,
@@ -44,7 +44,7 @@ module.exports = function(/* ctx */) {
     build: {
       env: {
         SOCKET_SERVER: ctx.dev
-          ? JSON.stringify("http://localhost:3002")
+          ? JSON.stringify("http://localhost:3001")
           : JSON.stringify(""),
       },
       vueRouterMode: "hash", // available values: 'hash', 'history'
