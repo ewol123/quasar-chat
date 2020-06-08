@@ -3,6 +3,7 @@ export default function () {
     roomIdentifier: null,
     isInitialized: false,
     users: [],
-    messages: []
+    messages: [],
+    loading: false
   }
 }
