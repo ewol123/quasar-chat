@@ -81,6 +81,7 @@
 
         <q-toolbar class="bg-grey-2">
           <q-input
+            v-if="!isInitialized"
             v-model="roomNumberInput"
             rounded
             outlined
@@ -90,11 +91,28 @@
             placeholder="Type your room number here..."
           >
             <template slot="append">
-              <q-btn size="sm" flat :loading="loading" :disable="$v.roomNumberInput.$invalid" @click="joinRoom()" >OK</q-btn>
+              <q-btn
+                size="sm"
+                flat
+                :loading="loading"
+                :disable="$v.roomNumberInput.$invalid"
+                @click="joinRoom()"
+                >OK</q-btn
+              >
             </template>
           </q-input>
+          <q-btn
+            v-else
+            dense
+            color="primary"
+            icon="fas fa-times"
+            label="Quit chat"
+            class="full-width"
+            @click="leaveRoom()"
+          />
         </q-toolbar>
 
+        <!-- create component for users  -->
         <q-scroll-area v-if="isInitialized" style="height: calc(100% - 100px)">
           <q-list>
             <q-item
@@ -187,14 +205,13 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 import { v4 as uuidv4 } from "uuid";
-import { required } from "vuelidate/lib/validators"
+import { required } from "vuelidate/lib/validators";
 export default {
   name: "MainLayout",
   data() {
     return {
-      loading: false,
       showUuid: false,
       generatedUuid: null,
       leftDrawerOpen: false,
@@ -240,7 +257,8 @@ export default {
   computed: {
     ...mapGetters({
       isInitialized: "room/isInitialized",
-      user: "user/user"
+      user: "user/user",
+      loading: "room/loading"
     }),
     currentConversation() {
       return this.conversations[this.currentConversationIndex];
@@ -251,18 +269,13 @@ export default {
       };
     }
   },
-   watch: {
-    '$store.state.room.isInitialized': {
-      handler(val){
-        if(!val) return;
-        this.loading = false;
-      }
-    }
-  },
   methods: {
     ...mapActions({
-      create: "room/create"
+      create: "room/create",
       patch: "room/patch"
+    }),
+    ...mapMutations({
+      setLoading: "room/loading"
     }),
     generateUuid() {
       const uuid = uuidv4();
