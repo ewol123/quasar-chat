@@ -47,6 +47,6 @@
 
 <script>
 export default {
-  name: "PageIndex"
+  name: "Messages"
 };
 </script>
