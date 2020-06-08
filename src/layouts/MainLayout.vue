@@ -262,6 +262,7 @@ export default {
   methods: {
     ...mapActions({
       create: "room/create"
+      patch: "room/patch"
     }),
     generateUuid() {
       const uuid = uuidv4();
@@ -272,9 +273,20 @@ export default {
       this.$refs.copyText.select();
       document.execCommand("copy");
     },
-    joinRoom(){
-        this.loading = true;
-        this.create({userIdentifier: this.user.id, roomIdentifier: this.generatedUuid});
+    joinRoom() {
+      this.setLoading(true);
+      this.create({
+        userIdentifier: this.user.id,
+        roomIdentifier: this.generatedUuid
+      });
+    },
+    leaveRoom() {
+      if (this.$route.name !== "Video chat")
+        this.$router.push({ name: "Video chat" });
+      this.setLoading(true);
+      this.patch({
+        userIdentifier: this.user.id
+      });
     }
   },
   validations: {
