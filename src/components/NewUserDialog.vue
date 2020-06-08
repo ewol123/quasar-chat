@@ -23,34 +23,34 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 import { required } from "vuelidate/lib/validators";
 export default {
   name: "NewUserDialog",
   data() {
     return {
-      loading: false,
       form: {
         name: ""
       }
     };
   },
-  watch: {
-    '$store.state.user.user': {
-      handler(val){
-        if(!val) return;
-        this.loading = false;
-        this.$emit("close");
-      }
-    }
+  computed: {
+    ...mapGetters({
+      user: "user/user",
+      loading: "user/loading"
+    })
   },
   methods: {
     ...mapActions({
       create: "user/create"
     }),
+    ...mapMutations({
+      setLoading: "user/loading"
+    }),
     createUser() {
-        this.loading = true;
-        this.create(this.form);
+      this.setLoading(true);
+      this.create(this.form);
+      this.$emit("close");
     }
   },
   validations: {
