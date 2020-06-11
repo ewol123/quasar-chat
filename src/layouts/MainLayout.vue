@@ -184,43 +184,7 @@ export default {
       showUuid: false,
       generatedUuid: null,
       leftDrawerOpen: false,
-      roomNumberInput: "",
-      message: "",
-      currentConversationIndex: 0,
-      conversations: [
-        {
-          id: 1,
-          person: "Razvan Stoenescu",
-          avatar: "https://cdn.quasar.dev/team/razvan_stoenescu.jpeg",
-          caption: "I'm working on Quasar!",
-          time: "15:00",
-          sent: true
-        },
-        {
-          id: 2,
-          person: "Dan Popescu",
-          avatar: "https://cdn.quasar.dev/team/dan_popescu.jpg",
-          caption: "I'm working on Quasar!",
-          time: "16:00",
-          sent: true
-        },
-        {
-          id: 3,
-          person: "Jeff Galbraith",
-          avatar: "https://cdn.quasar.dev/team/jeff_galbraith.jpg",
-          caption: "I'm working on Quasar!",
-          time: "18:00",
-          sent: true
-        },
-        {
-          id: 4,
-          person: "Allan Gaunt",
-          avatar: "https://cdn.quasar.dev/team/allan_gaunt.png",
-          caption: "I'm working on Quasar!",
-          time: "17:00",
-          sent: true
-        }
-      ]
+      roomNumberInput: null
     };
   },
   computed: {
@@ -229,9 +193,6 @@ export default {
       user: "user/user",
       loading: "room/loading"
     }),
-    currentConversation() {
-      return this.conversations[this.currentConversationIndex];
-    },
     style() {
       return {
         height: this.$q.screen.height + "px"
@@ -259,7 +220,7 @@ export default {
       this.setLoading(true);
       this.create({
         userIdentifier: this.user.id,
-        roomIdentifier: this.generatedUuid
+        roomIdentifier: this.roomNumberInput
       });
     },
     leaveRoom() {
@@ -314,9 +275,4 @@ export default {
   .WAL
     &__drawer-open
       display: none
-.conversation__summary
-  margin-top: 4px
-.conversation__more
-  margin-top: 0!important
-  font-size: 1.4rem
 </style>
