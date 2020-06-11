@@ -112,42 +112,7 @@
           />
         </q-toolbar>
 
-        <!-- create component for users  -->
-        <q-scroll-area v-if="isInitialized" style="height: calc(100% - 100px)">
-          <q-list>
-            <q-item
-              v-for="(conversation, index) in conversations"
-              :key="conversation.id"
-              v-ripple
-              clickable
-              @click="currentConversationIndex = index"
-            >
-              <q-item-section avatar>
-                <q-avatar>
-                  <img :src="conversation.avatar" />
-                </q-avatar>
-              </q-item-section>
-
-              <q-item-section>
-                <q-item-label lines="1">
-                  {{ conversation.person }}
-                </q-item-label>
-                <q-item-label class="conversation__summary" caption>
-                  <q-icon v-if="conversation.sent" name="check" />
-                  <q-icon v-if="conversation.deleted" name="not_interested" />
-                  {{ conversation.caption }}
-                </q-item-label>
-              </q-item-section>
-
-              <q-item-section side>
-                <q-item-label caption>
-                  {{ conversation.time }}
-                </q-item-label>
-                <q-icon name="keyboard_arrow_down" />
-              </q-item-section>
-            </q-item>
-          </q-list>
-        </q-scroll-area>
+        <user-list v-if="isInitialized" />
         <q-item v-else>
           <q-item-section>
             <span class="text-grey">No active users...</span>
@@ -208,8 +173,12 @@
 import { mapActions, mapGetters, mapMutations } from "vuex";
 import { v4 as uuidv4 } from "uuid";
 import { required } from "vuelidate/lib/validators";
+import UserList from "../components/UserList";
 export default {
   name: "MainLayout",
+  components: {
+    UserList
+  },
   data() {
     return {
       showUuid: false,
