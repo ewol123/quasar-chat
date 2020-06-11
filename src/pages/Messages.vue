@@ -2,12 +2,16 @@
   <q-page padding>
     <div style="width: 100%">
       <q-chat-message
-        name="You"
-        avatar="https://cdn.quasar.dev/img/avatar3.jpg"
-        :text="['hey, how are <strong>you</strong>?']"
-        stamp="7 minutes ago"
-        sent
-        bg-color="amber-7"
+        v-for="(message, index) in mappedMessages"
+        :key="index"
+        :name="message.name"
+        :avatar="message.avatar"
+        :text="message.text"
+        :stamp="message.stamp"
+        :sent="message.sent"
+        :text-sanitize="message.sanitize"
+        :text-color="message.textColor"
+        :bg-color="message.bgColor"
       />
       <q-footer>
         <q-toolbar class="bg-grey-3 text-black row">
@@ -44,7 +48,69 @@
 </template>
 
 <script>
+import { required } from "vuelidate/lib/validators";
+import { mapGetters, mapActions, mapMutations } from "vuex";
+import { orderBy } from "lodash";
+import moment from "moment";
 export default {
-  name: "Messages"
+  name: "Messages",
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      if (!vm.isInitialized) next({ name: "Video chat" });
+    });
+  },
+  data() {
+    return {
+      text: ""
+    };
+  },
+  computed: {
+    ...mapGetters({
+      messages: "room/messages",
+      isInitialized: "room/isInitialized",
+      loading: "room/loading",
+      user: "user/user"
+    }),
+    mappedMessages() {
+      const messages = this.messages.map(message => {
+        const sameUserMessage = message.user.id == this.user.id;
+
+        return {
+          name: message.user.name,
+          avatar: "https://www.waspcom.com/wp-content/uploads/2014/10/user-placeholder-circle-1-300x300.png",//message.user.avatar,
+          text: [message.text],
+          stamp: new Date(message.stamp),
+          sent: sameUserMessage,
+          sanitize: !sameUserMessage,
+          textColor: sameUserMessage ? "black" : "white",
+          bgColor: sameUserMessage ? "amber-7" : "primary"
+        };
+      });
+
+      return orderBy(messages, ["stamp"], ["asc"]).map(e => ({
+        ...e,
+        stamp: moment(e.stamp).format("YYYY-MM-DD HH:mm")
+      }));
+    }
+  },
+  methods: {
+    ...mapActions({
+      create: "message/create"
+    }),
+    ...mapMutations({
+      setLoading: "room/loading"
+    }),
+    sendMessage() {
+      if (this.$v.$invalid || this.loading) return;
+      this.setLoading(true);
+      this.create({ text: this.text, userIdentifier: this.user.id });
+      this.text = "";
+    }
+  },
+  validations: {
+    text: {
+      required
+    }
+  }
 };
 </script>
