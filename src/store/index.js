@@ -3,6 +3,8 @@ import Vuex from "vuex";
 
 import room from "./module-room";
 import user from "./module-user";
+import message from "./module-message";
+
 
 Vue.use(Vuex);
 
@@ -19,7 +21,8 @@ export default function(/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
       room,
-      user
+      user,
+      message
     },
 
     // enable strict mode (adds overhead!)
