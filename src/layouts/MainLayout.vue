@@ -123,29 +123,6 @@
       <q-page-container class="bg-grey-2">
         <router-view />
       </q-page-container>
-
-      <q-footer>
-        <q-toolbar class="bg-grey-3 text-black row">
-          <q-btn
-            :disable="!isInitialized"
-            round
-            flat
-            icon="insert_emoticon"
-            class="q-mr-sm"
-          />
-          <q-input
-            v-model="message"
-            :disable="!isInitialized"
-            rounded
-            outlined
-            dense
-            class="WAL__field col-grow q-mr-sm"
-            bg-color="white"
-            placeholder="Type a message"
-          />
-          <q-btn :disable="!isInitialized" flat round icon="send"></q-btn>
-        </q-toolbar>
-      </q-footer>
     </q-layout>
 
     <q-dialog v-model="showUuid" position="bottom">

@@ -9,38 +9,36 @@
         sent
         bg-color="amber-7"
       />
-      <q-chat-message
-        name="Jane"
-        avatar="https://cdn.quasar.dev/img/avatar5.jpg"
-        :text="[
-          'doing fine, how r you?',
-          'I just feel like typing a really, really, <strong>REALY</strong> long message to annoy you...'
-        ]"
-        text-sanitize
-        stamp="4 minutes ago"
-        text-color="white"
-        bg-color="primary"
-      />
-      <q-chat-message
-        name="Jao"
-        name-sanitize
-        avatar="https://cdn.quasar.dev/img/avatar5.jpg"
-        :text="['<strong>Did it work?</strong>']"
-        text-sanitize
-        stamp="1 minutes ago"
-        text-color="white"
-        bg-color="primary"
-      />
-      <q-chat-message
-        name="Jack"
-        name-sanitize
-        avatar="https://cdn.quasar.dev/img/avatar5.jpg"
-        :text="['sup bitches']"
-        text-sanitize
-        stamp="1 minutes ago"
-        text-color="white"
-        bg-color="primary"
-      />
+      <q-footer>
+        <q-toolbar class="bg-grey-3 text-black row">
+          <q-btn
+            :disable="!isInitialized"
+            round
+            flat
+            icon="insert_emoticon"
+            class="q-mr-sm"
+          />
+          <q-input
+            v-model="text"
+            :disable="!isInitialized"
+            rounded
+            outlined
+            dense
+            class="WAL__field col-grow q-mr-sm"
+            bg-color="white"
+            placeholder="Type a message"
+            @keydown.enter="sendMessage()"
+          />
+          <q-btn
+            :disable="!isInitialized || loading"
+            :loading="loading"
+            flat
+            round
+            icon="send"
+            @click="sendMessage()"
+          ></q-btn>
+        </q-toolbar>
+      </q-footer>
     </div>
   </q-page>
 </template>
