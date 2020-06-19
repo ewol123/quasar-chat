@@ -5,7 +5,7 @@
         v-for="(message, index) in mappedMessages"
         :key="index"
         :name="message.name"
-        :avatar="message.avatar"
+        avatar="~assets/user.png"
         :text="message.text"
         :stamp="message.stamp"
         :sent="message.sent"
@@ -77,7 +77,7 @@ export default {
 
         return {
           name: message.user.name,
-          avatar: "https://www.waspcom.com/wp-content/uploads/2014/10/user-placeholder-circle-1-300x300.png",//message.user.avatar,
+          avatar: "",//message.user.avatar,
           text: [message.text],
           stamp: new Date(message.stamp),
           sent: sameUserMessage,
