@@ -11,6 +11,7 @@
     </q-card-section>
     <q-card-actions align="right">
       <q-btn
+        id="go-btn"
         flat
         label="let's go"
         color="primary"
