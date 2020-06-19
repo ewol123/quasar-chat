@@ -5,6 +5,7 @@
         <q-toolbar class="bg-grey-3 text-black">
           <q-btn
             v-if="!leftDrawerOpen"
+            id="kb-arrow-left"
             round
             flat
             icon="keyboard_arrow_left"
@@ -128,7 +129,7 @@
     <q-dialog v-model="showUuid" position="bottom">
       <q-card style="width: 350px">
         <q-card-section class="row items-center no-wrap">
-          <q-input ref="copyText" v-model="generatedUuid" class="col-10" />
+          <q-input ref="copyText" v-model="generatedUuid" class="col-10" readonly />
           <q-btn
             class="col-2"
             flat
@@ -192,6 +193,7 @@ export default {
     copyText() {
       this.$refs.copyText.select();
       document.execCommand("copy");
+      this.showUuid = false;
     },
     joinRoom() {
       this.setLoading(true);
