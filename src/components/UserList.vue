@@ -9,7 +9,7 @@
       >
         <q-item-section avatar>
           <q-avatar>
-            <img :src="conversation.avatar" />
+            <img src="~assets/user.png" />
           </q-avatar>
         </q-item-section>
 
@@ -63,7 +63,7 @@ export default {
         return {
           id: user.id,
           person: user.name,
-          avatar: "https://www.waspcom.com/wp-content/uploads/2014/10/user-placeholder-circle-1-300x300.png",//user.avatar,
+          avatar: "", //user.avatar,
           caption: lastUserMessage?.text,
           time: lastUserMessage
             ? moment(lastUserMessage.stamp).format("YYYY-MM-DD HH:mm")
