@@ -12,29 +12,23 @@
         >
       </div>
     </q-page>
-    <q-page v-else>
-      <div class="column" style="height: 88vh">
-        <div :class="flexClass" style="border: 2px solid black">
-          <video></video>
-        </div>
-        <div :class="flexClass" style="border: 2px solid black">
-          <video></video>
-        </div>
-        <div :class="flexClass" style="border: 2px solid black">
-          <video></video>
-        </div>
-        <div :class="flexClass" style="border: 2px solid black">
-          <video></video>
-        </div>
-        <div :class="flexClass" style="border: 2px solid black">
-          <video></video>
-        </div>
-        <div :class="flexClass" style="border: 2px solid black">
-          <video></video>
-        </div>
-        <div :class="flexClass" style="border: 2px solid black">
-          <video></video>
-        </div>
+    <q-page v-else class="flex flex-center">
+      <div class="row justify-center text-center">
+        <img
+          alt="Quasar logo"
+          src="~assets/undraw_warning_cyit.svg"
+          class="col-12 col-md-6"
+        />
+        <span class="col-12 q-mt-sm"
+          >Video chat is under construction in the demo.
+          <q-btn
+            dense
+            class="bg-primary"
+            label="go to chat"
+            @click="$router.push({ name: 'Messages' })"
+          />
+          instead</span
+        >
       </div>
     </q-page>
 
@@ -47,6 +41,7 @@
 <script>
 import { mapGetters, mapMutations } from "vuex";
 import NewUserDialog from "../components/NewUserDialog";
+
 export default {
   name: "PageIndex",
   components: {
@@ -54,23 +49,15 @@ export default {
   },
   data() {
     return {
-      users: 7,
       initUser: false
     };
   },
   computed: {
     ...mapGetters({
       isInitialized: "room/isInitialized",
+      users: "room/users",
       user: "user/user"
-    }),
-    flexClass() {
-      if (this.users < 3) return "col-12";
-      if (this.users >= 3 && this.users <= 6) return "col-6";
-      if (this.users >= 7 && this.users <= 12) return "col-4";
-      if (this.users >= 13 && this.users <= 20) return "col-3";
-      if (this.users >= 21 && this.users <= 48) return "col-2";
-      return "";
-    }
+    })
   },
   mounted() {
     if (!this.user) this.initUser = true;
