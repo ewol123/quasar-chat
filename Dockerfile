@@ -7,7 +7,7 @@ RUN npm install
 COPY . .
 # build stage
 FROM develop-stage as build-stage
-RUN quasar build
+RUN quasar build -m pwa
 # production stage
 FROM nginx:1.15.7-alpine as production-stage
 COPY --from=build-stage /app/dist/pwa /usr/share/nginx/html
