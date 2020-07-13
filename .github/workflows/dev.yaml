@@ -1,0 +1,50 @@
+name: quasar-chat CI
+on:
+  push:
+    branches:
+      - dev
+jobs: 
+    build-and-publish: 
+        name: clone, test build docker quasar-chat
+        runs-on: ubuntu-latest 
+        steps: 
+            - name: setup node 
+              uses: actions/setup-node@v1 
+              with: 
+                node-version: '12.0' 
+            - name: checkout quasar-chat 
+              uses: actions/checkout@v2 
+              with: 
+                repository: ewol123/quasar-chat 
+                ref: dev   #specify branch here 
+                token: ${{ secrets.WORKFLOW }} #save secret in quasar-chat repository 
+                path: quasar-chat  #we can access this folder in our workspace 
+            - name: npm install quasar-chat 
+              working-directory: quasar-chat 
+              run: npm install 
+            - name: lint quasar-chat 
+              working-directory: quasar-chat 
+              run: npm run lint-fix
+            - name: get the commit sha
+              working-directory: quasar-chat
+              id: get_sha
+              run: echo ::set-output name=COMMIT_SHA::$(git rev-parse --short HEAD)
+            - name: docker build quasar-chat
+              working-directory: quasar-chat
+              run: docker build -t gyulavaripeter/quasar-chat:latest -t gyulavaripeter/quasar-chat:dev-${{ steps.get_sha.outputs.COMMIT_SHA }} .
+            - name: docker login
+              env:
+                  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+                  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+              run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+            - name: docker push latest
+              run: docker push gyulavaripeter/quasar-chat:latest
+            - name: docker push COMMIT_SHA
+              run: docker push gyulavaripeter/quasar-chat:dev-${{ steps.get_sha.outputs.COMMIT_SHA }}
+            - name: commit changes to repository 
+              uses: stefanzweifel/git-auto-commit-action@v4 
+              with: 
+                commit_message: Apply automatic changes 
+                branch: dev 
+                commit_options: '--no-verify --signoff' 
+                repository: quasar-chat
