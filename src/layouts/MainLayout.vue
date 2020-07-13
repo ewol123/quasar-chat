@@ -129,7 +129,12 @@
     <q-dialog v-model="showUuid" position="bottom">
       <q-card style="width: 350px">
         <q-card-section class="row items-center no-wrap">
-          <q-input ref="copyText" v-model="generatedUuid" class="col-10" readonly />
+          <q-input
+            ref="copyText"
+            v-model="generatedUuid"
+            class="col-10"
+            readonly
+          />
           <q-btn
             class="col-2"
             flat
