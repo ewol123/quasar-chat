@@ -5,7 +5,6 @@ import room from "./module-room";
 import user from "./module-user";
 import message from "./module-message";
 
-
 Vue.use(Vuex);
 
 /*
