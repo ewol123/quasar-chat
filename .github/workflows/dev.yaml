@@ -25,13 +25,9 @@ jobs:
             - name: lint quasar-chat 
               working-directory: quasar-chat 
               run: npm run lint-fix
-            - name: Test
-              uses: ianwalter/bsl@v2.1.0
-              with:
-                args: npm run local-test
-              env:
-                BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
-                BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+            - name: test quasar-chat
+              working-directory: quasar-chat 
+              run: npm run local-test
             - name: get the commit sha
               working-directory: quasar-chat
               id: get_sha
