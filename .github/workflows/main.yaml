@@ -27,7 +27,7 @@ jobs:
               run: npm run lint-fix
             - name: get the commit sha
               id: get_sha
-              run: echo ::set-output name=COMMIT_SHA::$(git rev-parse --short "$GITHUB_SHA")
+              run: echo ::set-output name=COMMIT_SHA::$(git rev-parse --short HEAD)
             - name: docker build quasar-chat
               working-directory: quasar-chat
               run: docker build -t gyulavaripeter/quasar-chat:latest -t gyulavaripeter/quasar-chat:dev-${{ steps.get_sha.outputs.COMMIT_SHA }} .
