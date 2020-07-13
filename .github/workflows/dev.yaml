@@ -12,18 +12,18 @@ jobs:
               uses: actions/setup-node@v1 
               with: 
                 node-version: '12.0' 
-            - name: checkout chat-serivce
+            - name: checkout chat-service
               uses: actions/checkout@v2
               with:
                 repository: ewol123/chat-service
                 ref: dev
                 token: ${{ secrets.WORKFLOW }}
                 path: chat-service
-            - name: npm install chat-serivce
-              working-directory: chat-serivce
+            - name: npm install chat-service
+              working-directory: chat-service
               run: npm install
             - name: start testing redis db
-              working-directory: chat-serivce
+              working-directory: chat-service
               run: docker run --name redis -p6379:6379 -d redis redis-server --appendonly yes
             - name: start testing postgres db
               working-directory: chat-service
