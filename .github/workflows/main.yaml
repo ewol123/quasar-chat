@@ -1,8 +1,10 @@
 name: quasar-chat CI
 on:
   push:
+    tags:
+      - '*'
     branches:
-      - stg
+      - master
 jobs: 
     build-and-publish: 
         name: clone, test build docker quasar-chat
@@ -16,7 +18,7 @@ jobs:
               uses: actions/checkout@v2 
               with: 
                 repository: ewol123/quasar-chat 
-                ref: stg   #specify branch here 
+                ref: master   #specify branch here 
                 token: ${{ secrets.WORKFLOW }} #save secret in quasar-chat repository 
                 path: quasar-chat  #we can access this folder in our workspace 
             - name: npm install quasar-chat 
@@ -25,12 +27,12 @@ jobs:
             - name: lint quasar-chat 
               working-directory: quasar-chat 
               run: npm run lint-fix
-            - name: get the commit sha
-              id: get_sha
-              run: echo ::set-output name=COMMIT_SHA::$(git rev-parse --short "$GITHUB_SHA")
+            - name: get the version
+              id: get_version
+              run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
             - name: docker build quasar-chat
               working-directory: quasar-chat
-              run: docker build -t gyulavaripeter/quasar-chat:latest -t gyulavaripeter/quasar-chat:stg-${{ steps.get_sha.outputs.COMMIT_SHA }} .
+              run: docker build -t gyulavaripeter/quasar-chat:latest -t gyulavaripeter/quasar-chat:prod-${{ steps.get_sha.outputs.VERSION }} .
             - name: docker login
               env:
                   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
@@ -38,12 +40,12 @@ jobs:
               run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
             - name: docker push latest
               run: docker push gyulavaripeter/quasar-chat:latest
-            - name: docker push COMMIT_SHA
-              run: docker push gyulavaripeter/quasar-chat:stg-${{ steps.get_sha.outputs.COMMIT_SHA }}
+            - name: docker push version
+              run: docker push gyulavaripeter/quasar-chat:prod-${{ steps.get_sha.outputs.VERSION }}
             - name: commit changes to repository 
               uses: stefanzweifel/git-auto-commit-action@v4 
               with: 
                 commit_message: Apply automatic changes 
-                branch: stg 
+                branch: master 
                 commit_options: '--no-verify --signoff' 
                 repository: quasar-chat
