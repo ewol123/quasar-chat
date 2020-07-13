@@ -3,8 +3,6 @@ on:
   push:
     tags:
       - '*'
-    branches:
-      - master
 jobs: 
     build-and-publish: 
         name: clone, test build docker quasar-chat
