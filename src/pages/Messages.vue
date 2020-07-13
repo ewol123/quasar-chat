@@ -77,7 +77,7 @@ export default {
 
         return {
           name: message.user.name,
-          avatar: "",//message.user.avatar,
+          avatar: "", //message.user.avatar,
           text: [message.text],
           stamp: new Date(message.stamp),
           sent: sameUserMessage,
