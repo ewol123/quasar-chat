@@ -39,7 +39,7 @@ jobs:
             - name: docker push latest
               run: docker push gyulavaripeter/quasar-chat:latest
             - name: docker push version
-              run: docker push gyulavaripeter/quasar-chat:prod-${{ steps.get_sha.outputs.VERSION }}
+              run: docker push gyulavaripeter/quasar-chat:prod-${{ steps.get_version.outputs.VERSION }}
             - name: commit changes to repository 
               uses: stefanzweifel/git-auto-commit-action@v4 
               with: 
