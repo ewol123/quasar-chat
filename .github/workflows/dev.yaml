@@ -12,6 +12,29 @@ jobs:
               uses: actions/setup-node@v1 
               with: 
                 node-version: '12.0' 
+            - name: checkout chat-service
+              uses: actions/checkout@v2
+              with:
+                repository: ewol123/chat-service
+                ref: dev
+                token: ${{ secrets.WORKFLOW }}
+                path: chat-service
+            - name: npm install chat-service
+              working-directory: chat-service
+              run: npm install
+            - name: start testing redis db
+              working-directory: chat-service
+              run: docker run --name redis -p6379:6379 -d redis redis-server --appendonly yes
+            - name: start testing postgres db
+              working-directory: chat-service
+              run: docker run --name some-postgres -p5432:5432 -e POSTGRES_PASSWORD=test -e POSTGRES_USER=postgres -e POSTGRES_DB=chat-dev -d postgres
+            - name: start testing server
+              working-directory: chat-service
+              run: npm run dev
+            - name: wait for server to start
+              uses: jakejarvis/wait-action@master
+              with:
+                time: '30s'
             - name: checkout quasar-chat 
               uses: actions/checkout@v2 
               with: 
@@ -25,6 +48,12 @@ jobs:
             - name: lint quasar-chat 
               working-directory: quasar-chat 
               run: npm run lint-fix
+            - name: test quasar-chat
+              working-directory: quasar-chat 
+              run: npm run local-test
+              env:
+                BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+                BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
             - name: get the commit sha
               working-directory: quasar-chat
               id: get_sha
