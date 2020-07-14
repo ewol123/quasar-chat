@@ -30,7 +30,7 @@ jobs:
               run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
             - name: docker build quasar-chat
               working-directory: quasar-chat
-              run: docker build -t gyulavaripeter/quasar-chat:latest -t gyulavaripeter/quasar-chat:prod-${{ steps.get_version.outputs.VERSION }} .
+              run: docker build -t gyulavaripeter/quasar-chat:latest -t gyulavaripeter/quasar-chat:${{ steps.get_version.outputs.VERSION }} .
             - name: docker login
               env:
                   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
@@ -39,7 +39,7 @@ jobs:
             - name: docker push latest
               run: docker push gyulavaripeter/quasar-chat:latest
             - name: docker push version
-              run: docker push gyulavaripeter/quasar-chat:prod-${{ steps.get_version.outputs.VERSION }}
+              run: docker push gyulavaripeter/quasar-chat:${{ steps.get_version.outputs.VERSION }}
             - name: commit changes to repository 
               uses: stefanzweifel/git-auto-commit-action@v4 
               with: 
