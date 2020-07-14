@@ -30,7 +30,7 @@ jobs:
               run: docker run --name some-postgres -p5432:5432 -e POSTGRES_PASSWORD=test -e POSTGRES_USER=postgres -e POSTGRES_DB=chat-dev -d postgres
             - name: start testing server
               working-directory: chat-service
-              run: npm run dev
+              run: nohup npm run dev
             - name: wait for server to start
               uses: jakejarvis/wait-action@master
               with:
