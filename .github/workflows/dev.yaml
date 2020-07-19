@@ -40,12 +40,6 @@ jobs:
             - name: lint quasar-chat 
               working-directory: quasar-chat 
               run: npm run lint-fix
-            - name: test quasar-chat
-              working-directory: quasar-chat 
-              run: npm run local-test
-              env:
-                BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
-                BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
             - name: get the commit sha
               working-directory: quasar-chat
               id: get_sha
@@ -53,6 +47,15 @@ jobs:
             - name: docker build quasar-chat
               working-directory: quasar-chat
               run: docker build -t gyulavaripeter/quasar-chat:latest -t gyulavaripeter/quasar-chat:dev-${{ steps.get_sha.outputs.COMMIT_SHA }} .
+            - name: run quasar-chat for testing
+              run: docker run --name quasar-chat --network=host -p82:82 -d -e DEV=true gyulavaripeter/quasar-chat:dev-${{ steps.get_sha.outputs.COMMIT_SHA }}
+            - name: test quasar-chat
+              working-directory: quasar-chat 
+              run: npm run local-test
+              env:
+                BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+                BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+                BROWSERSTACK_PORT: 82
             - name: docker push latest
               run: docker push gyulavaripeter/quasar-chat:latest
             - name: docker push COMMIT_SHA
