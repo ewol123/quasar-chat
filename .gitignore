@@ -1,8 +1,6 @@
 .DS_Store
 .thumbs.db
 node_modules
-local.log
-tests_output
 # Quasar core related directories
 .quasar
 /dist
@@ -32,3 +30,6 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
+
+local.log
+tests_output

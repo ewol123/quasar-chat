@@ -40,16 +40,22 @@ jobs:
             - name: lint quasar-chat 
               working-directory: quasar-chat 
               run: npm run lint-fix
+            - name: get the commit sha
+              working-directory: quasar-chat
+              id: get_sha
+              run: echo ::set-output name=COMMIT_SHA::$(git rev-parse --short HEAD)
+            - name: docker build quasar-chat-testing
+              working-directory: quasar-chat
+              run: docker build -f Dockerfile-dev -t gyulavaripeter/quasar-chat-testing:latest .
+            - name: run quasar-chat for testing
+              run: docker run --name quasar-chat --network=host -p82:82 -d gyulavaripeter/quasar-chat-testing:latest
             - name: test quasar-chat
               working-directory: quasar-chat 
               run: npm run local-test
               env:
                 BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
                 BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
-            - name: get the commit sha
-              working-directory: quasar-chat
-              id: get_sha
-              run: echo ::set-output name=COMMIT_SHA::$(git rev-parse --short HEAD)
+                BROWSERSTACK_PORT: 82
             - name: docker build quasar-chat
               working-directory: quasar-chat
               run: docker build -t gyulavaripeter/quasar-chat:latest -t gyulavaripeter/quasar-chat:stg-${{ steps.get_sha.outputs.COMMIT_SHA }} .
