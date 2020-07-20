@@ -54,7 +54,7 @@
             </q-tooltip>
           </q-btn>
 
-          <q-btn round flat icon="fas fa-video" to="/">
+          <q-btn id="main-btn-video" round flat icon="fas fa-video" to="/">
             <q-tooltip>
               Video
             </q-tooltip>
@@ -116,7 +116,7 @@
         <user-list v-if="isInitialized" />
         <q-item v-else>
           <q-item-section>
-            <span class="text-grey">No active users...</span>
+            <span id="main-text1" class="text-grey">No active users...</span>
           </q-item-section>
         </q-item>
       </q-drawer>

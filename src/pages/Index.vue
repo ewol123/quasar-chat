@@ -7,7 +7,7 @@
           src="~assets/undraw_typewriter_i8xd.svg"
           class="col-12 col-md-6"
         />
-        <span class="col-12"
+        <span id="index-text1" class="col-12"
           >Type in your room number and click <strong>OK</strong> to start</span
         >
       </div>

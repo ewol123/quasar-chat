@@ -12,6 +12,21 @@ jobs:
               uses: actions/setup-node@v1 
               with: 
                 node-version: '12.0' 
+            - name: docker login
+              env:
+                  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+                  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+              run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+            - name: start testing redis db
+              run: docker run --name redis -p6379:6379 -d redis redis-server --appendonly yes
+            - name: start testing postgres db
+              run: docker run --name postgres -p5432:5432 -e POSTGRES_PASSWORD=test -e POSTGRES_USER=postgres -e POSTGRES_DB=chat-prod -d postgres
+            - name: start testing server
+              run: docker run --name chat-service --link redis:redis --link postgres:postgres -p3001:3001 -e REDIS_HOST=redis -e REDIS_PORT=6379 -e PG_HOST=postgres -e PG_PORT=5432 -e PG_USER=postgres -e PG_PW=test -e PG_DB=chat-prod -d gyulavaripeter/chat-service:latest
+            - name: wait for server to start
+              uses: jakejarvis/wait-action@master
+              with:
+                time: '30s'
             - name: checkout quasar-chat 
               uses: actions/checkout@v2 
               with: 
@@ -27,15 +42,22 @@ jobs:
               run: npm run lint-fix
             - name: get the version
               id: get_version
-              run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+              run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}  
+            - name: docker build quasar-chat-testing
+              working-directory: quasar-chat
+              run: docker build -f Dockerfile-dev -t gyulavaripeter/quasar-chat-testing:latest .
+            - name: run quasar-chat for testing
+              run: docker run --name quasar-chat --network=host -p82:82 -d gyulavaripeter/quasar-chat-testing:latest
+            - name: test quasar-chat
+              working-directory: quasar-chat 
+              run: npm run local-test
+              env:
+                BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+                BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+                BROWSERSTACK_PORT: 82
             - name: docker build quasar-chat
               working-directory: quasar-chat
               run: docker build -t gyulavaripeter/quasar-chat:latest -t gyulavaripeter/quasar-chat:${{ steps.get_version.outputs.VERSION }} .
-            - name: docker login
-              env:
-                  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-                  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-              run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
             - name: docker push latest
               run: docker push gyulavaripeter/quasar-chat:latest
             - name: docker push version
