@@ -46,7 +46,7 @@ jobs:
               run: echo ::set-output name=COMMIT_SHA::$(git rev-parse --short HEAD)
             - name: docker build quasar-chat-testing
               working-directory: quasar-chat
-              run: docker build -f Dockerfile-dev -t gyulavaripeter/quasar-chat-testing:latest
+              run: docker build -f Dockerfile-dev -t gyulavaripeter/quasar-chat-testing:latest .
             - name: run quasar-chat for testing
               run: docker run --name quasar-chat --network=host -p82:82 -d gyulavaripeter/quasar-chat-testing:latest
             - name: test quasar-chat
