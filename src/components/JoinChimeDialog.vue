@@ -3,26 +3,20 @@
     <q-card-section class="row items-center">
       <q-avatar icon="fas fa-exclamation" color="primary" text-color="white" />
       <span class="q-ml-sm text-weight-bold"
-        >Welcome, please enter your user details</span
+        >To join a meeting please enter the meeting identifier</span
       >
     </q-card-section>
     <q-card-section>
-      <q-input
-        v-model="form.name"
-        label="Name"
-        dense
-        @keyup.enter="createUser()"
-      />
+      <q-input v-model="form.meetingId" label="Meeting Identifier" dense />
     </q-card-section>
     <q-card-actions align="right">
       <q-btn
-        id="go-btn"
         flat
-        label="let's go"
+        label="let's do it"
         color="primary"
         :disable="$v.form.$invalid"
         :loading="loading"
-        @click="createUser()"
+        @click="joinChime()"
       />
     </q-card-actions>
   </q-card>
@@ -32,36 +26,36 @@
 import { mapActions, mapGetters, mapMutations } from "vuex";
 import { required } from "vuelidate/lib/validators";
 export default {
-  name: "NewUserDialog",
+  name: "JoinChimeDialog",
   data() {
     return {
       form: {
-        name: ""
+        meetingId: ""
       }
     };
   },
   computed: {
     ...mapGetters({
       user: "user/user",
-      loading: "user/loading"
+      loading: "chime/loading"
     })
   },
   methods: {
     ...mapActions({
-      create: "user/create"
+      join: "chime/join"
     }),
     ...mapMutations({
-      setLoading: "user/loading"
+      setLoading: "chime/loading"
     }),
-    createUser() {
+    joinChime() {
       this.setLoading(true);
-      this.create(this.form);
+      this.join({...this.form, userIdentifier: this.user.id});
       this.$emit("close");
     }
   },
   validations: {
     form: {
-      name: {
+      meetingId: {
         required
       }
     }

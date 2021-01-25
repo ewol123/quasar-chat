@@ -4,6 +4,7 @@ import Vuex from "vuex";
 import room from "./module-room";
 import user from "./module-user";
 import message from "./module-message";
+import chime from "./module-chime";
 
 Vue.use(Vuex);
 
@@ -21,7 +22,8 @@ export default function(/* { ssrContext } */) {
     modules: {
       room,
       user,
-      message
+      message,
+      chime
     },
 
     // enable strict mode (adds overhead!)
