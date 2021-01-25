@@ -7,7 +7,12 @@
       >
     </q-card-section>
     <q-card-section>
-      <q-input v-model="form.name" label="Name" dense />
+      <q-input
+        v-model="form.name"
+        label="Name"
+        dense
+        @keyup.enter="createUser()"
+      />
     </q-card-section>
     <q-card-actions align="right">
       <q-btn
