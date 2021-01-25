@@ -49,7 +49,7 @@ export default {
     }),
     joinChime() {
       this.setLoading(true);
-      this.join({...this.form, userIdentifier: this.user.id});
+      this.join({ ...this.form, userIdentifier: this.user.id });
       this.$emit("close");
     }
   },
