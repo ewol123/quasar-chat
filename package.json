@@ -10,7 +10,8 @@
   "scripts": {
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore ./",
     "lint-fix": "eslint --fix --ext .js,.vue src",
-    "local-test": "node ./scripts/local.runner.js -c conf/local.conf.js"
+    "local-test": "node ./scripts/local.runner.js -c conf/local.conf.js",
+    "build": "npx quasar build -m pwa"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
