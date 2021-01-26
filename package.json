@@ -17,7 +17,7 @@
     "@quasar/extras": "^1.0.0",
     "@vue/eslint-config-prettier": "^6.0.0",
     "amazon-chime-sdk-js": "^1.13.0",
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "browserstack-local": "^1.4.5",
     "eslint-friendly-formatter": "^4.0.1",
     "eslint-plugin-prettier": "^3.1.3",
