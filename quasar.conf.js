@@ -45,7 +45,7 @@ module.exports = function(ctx) {
       env: {
         SOCKET_SERVER: ctx.dev
           ? JSON.stringify("http://localhost:3001")
-          : JSON.stringify("http://service.qchat.ga")
+          : JSON.stringify("http://ec2-107-22-166-61.compute-1.amazonaws.com:3001/")
       },
       vueRouterMode: "history", // available values: 'hash', 'history'
 
