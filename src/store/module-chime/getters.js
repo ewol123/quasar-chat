@@ -8,7 +8,7 @@ export function meetingResponse(state) {
 export function attendeeResponse(state) {
   return state.attendeeResponse;
 }
-export function attendeeId(state){
+export function attendeeId(state) {
   if (!state.attendeeResponse) return null;
   return state.attendeeResponse.Attendee.AttendeeId;
 }

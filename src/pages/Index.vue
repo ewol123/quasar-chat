@@ -103,13 +103,13 @@ export default {
     NewUserDialog,
     ChimeVideoChat,
     JoinChimeDialog,
-    DisplayMeetingIdDialog,
+    DisplayMeetingIdDialog
   },
   data() {
     return {
       initUser: false,
       joinChime: false,
-      showMeetingIdDialog: false,
+      showMeetingIdDialog: false
     };
   },
   computed: {
