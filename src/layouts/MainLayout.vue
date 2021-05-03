@@ -26,7 +26,9 @@
               <q-list style="min-width: 150px">
                 <q-item clickable>
                   <q-item-section>
-                    <a href="https://www.youtube.com/watch?v=ZZ5LpwO-An4">logout</a>
+                    <a href="https://www.youtube.com/watch?v=ZZ5LpwO-An4"
+                      >logout</a
+                    >
                   </q-item-section>
                 </q-item>
               </q-list>
