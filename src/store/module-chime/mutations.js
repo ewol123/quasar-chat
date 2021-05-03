@@ -7,6 +7,8 @@ export function loading(state, payload) {
 export function chimeMeetingCreated(state, payload) {
   Loading.hide();
   state.loading = false;
+  console.log(payload);
+
   if (!payload || payload.error) {
     return Notify.create({
       message: "Oops, an error occured, please try again",

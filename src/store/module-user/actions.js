@@ -1,8 +1,8 @@
-import { socket } from "boot/socketio";
+import { connection } from "boot/signalr";
 
-export function create({ commit }, payload) {
+export async function create({ commit }, payload) {
   try {
-    socket.emit("CREATE_USER", payload);
+    await connection.invoke("CreateUser", payload);
   } catch (error) {
     commit("loading", false);
     return false;

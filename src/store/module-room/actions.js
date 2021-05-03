@@ -1,17 +1,17 @@
-import { socket } from "boot/socketio";
+import { connection } from "boot/signalr";
 
-export function create({ commit }, payload) {
+export async function create({ commit }, payload) {
   try {
-    socket.emit("JOIN_ROOM", payload);
+    await connection.invoke("JoinRoom", payload);
   } catch (error) {
     commit("loading", false);
     return false;
   }
 }
 
-export function patch({ commit }, payload) {
+export async function patch({ commit }, payload) {
   try {
-    socket.emit("LEAVE_ROOM", payload);
+    await connection.invoke("LeaveRoom", payload);
   } catch (error) {
     commit("loading", false);
     return false;

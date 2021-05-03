@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      join: "chime/join"
+      join: "chime/joinChimeMeeting"
     }),
     ...mapMutations({
       setLoading: "chime/loading"

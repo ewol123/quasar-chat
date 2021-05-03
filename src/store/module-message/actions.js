@@ -1,8 +1,8 @@
-import { socket } from "boot/socketio";
+import { connection } from "boot/signalr";
 
-export function create({}, payload) {
+export async function create({}, payload) {
   try {
-    socket.emit("CREATE_MESSAGE", payload);
+    await connection.invoke("CreateMessage", payload);
   } catch (error) {
     return false;
   }

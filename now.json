@@ -1,0 +1,8 @@
+{
+    "name": "quasar-chat",
+    "version": 2,
+    "routes": [
+      { "handle": "filesystem" },
+      { "src": "/.*", "dest": "/index.html" }
+    ]
+  }

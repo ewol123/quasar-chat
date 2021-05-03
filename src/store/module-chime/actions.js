@@ -1,19 +1,19 @@
-import { socket } from "boot/socketio";
+import { connection } from "boot/signalr";
 import { Loading } from "quasar";
 
-export function createChimeMeeting({}, payload) {
+export async function createChimeMeeting({}, payload) {
   try {
     Loading.show();
-    socket.emit("CREATE_CHIME_MEETING", payload);
+    await connection.invoke("CreateChimeMeeting", payload);
   } catch (error) {
     return false;
   }
 }
 
-export function joinChimeMeeting({}, payload) {
+export async function joinChimeMeeting({}, payload) {
   try {
     Loading.show();
-    socket.emit("JOIN_CHIME_MEETING", payload);
+    await connection.invoke("JoinChimeMeeting", payload);
   } catch (error) {
     return false;
   }

@@ -33,3 +33,5 @@ yarn-error.log*
 
 local.log
 tests_output
+
+.vercel

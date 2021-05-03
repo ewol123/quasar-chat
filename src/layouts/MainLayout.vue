@@ -43,7 +43,7 @@
       >
         <q-toolbar class="bg-grey-3">
           <q-avatar class="cursor-pointer">
-            <img src="https://cdn.quasar.dev/app-icons/icon-128x128.png" />
+            <img src="statics/chat-image.png" />
           </q-avatar>
 
           <q-space />

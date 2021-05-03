@@ -21,7 +21,7 @@ module.exports = function(ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/cli-documentation/boot-files
-    boot: ["i18n", "axios", "vuelidate", "socketio", "custom-directives"],
+    boot: ["i18n", "axios", "vuelidate", "signalr", "custom-directives"],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
     css: ["app.sass"],
@@ -44,8 +44,8 @@ module.exports = function(ctx) {
     build: {
       env: {
         SOCKET_SERVER: ctx.dev
-          ? JSON.stringify("http://localhost:3001")
-          : JSON.stringify("http://ec2-107-22-166-61.compute-1.amazonaws.com:3001/")
+          ? JSON.stringify("http://localhost:5172/chathub")
+          : JSON.stringify("/chathub")
       },
       vueRouterMode: "history", // available values: 'hash', 'history'
 

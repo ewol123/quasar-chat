@@ -12,5 +12,5 @@ export function userCreated(state, payload) {
       color: "warning"
     });
   }
-  Object.assign(state, payload);
+  Object.assign(state, { user: { id: payload.id, name: payload.name } });
 }

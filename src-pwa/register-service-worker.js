@@ -30,26 +30,7 @@ register(process.env.SERVICE_WORKER_FILE, {
   },
 
   updated(/* registration */) {
-    Notify.create({
-      color: "negative",
-      icon: mdiCached,
-      message: "New version available, please refresh the page!",
-      timeout: 0,
-      multiLine: true,
-      position: "top",
-      actions: [
-        {
-          label: "Refresh",
-          color: "yellow",
-          handler: () => {
-            window.location.reload();
-          }
-        }
-      ]
-    });
-    if (process.env.DEV) {
-      console.log("New content is available; please refresh.");
-    }
+ 
   },
 
   offline() {
