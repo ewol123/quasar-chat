@@ -1,5 +1,5 @@
 # QuasarChat (quasar-chat)
-
+### !!!chrome recommended for camera usage!!!
 sample chat app
 
 ## Demo
