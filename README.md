@@ -2,6 +2,13 @@
 ### !!!chrome recommended for camera usage!!!
 sample chat app
 
+## Usage
+
+- Click on the (+) icon to get a new roomId
+- Click on the camera to access webcam page
+- Click on the speech bubbles icon to access the chat
+
+
 ## Demo
 https://github.com/ewol123/chat.net/releases/tag/v1.0.0
 
