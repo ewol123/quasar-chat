@@ -8,10 +8,6 @@ sample chat app
 - Click on the camera to access webcam page
 - Click on the speech bubbles icon to access the chat
 
-
-## Demo
-https://github.com/ewol123/chat.net/releases/tag/v1.0.0
-
 ## Install the dependencies
 ```bash
 npm install
@@ -35,3 +31,5 @@ quasar build
 ### Customize the configuration
 See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
 
+## Demo (using another backend)
+https://github.com/ewol123/chat.net/releases/tag/v1.0.0
